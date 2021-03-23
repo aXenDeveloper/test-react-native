@@ -1,21 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, ScrollView } from 'react-native';
+import InputTask from './components/InputTask';
+import TasksList from './components/tasks/TasksList';
 
 export default function App() {
+  const [tasks, setTasks] = useState([]);
+
+  const handleButton = (inputText, setInputText) => {
+    setTasks([...tasks, { id: Math.round(Math.random() * 1000).toString(), value: inputText }]);
+    setInputText('');
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={styles.main}>
+      <InputTask handleButton={handleButton} />
+
+      <TasksList tasks={tasks} />
     </View>
   );
 }
 
+// <StatusBar style="auto" />
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  main: {
+    padding: 10
+  }
 });
